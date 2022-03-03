@@ -18,8 +18,8 @@ export const SideMenu = () => {
 
     return <div className="bg-black h-screen space-y-2">
         <img className="p-4" src={"https://gthtranslation.com/wp-content/uploads/2022/02/footer_logo6.webp"}></img>
-        <div className="h-1"/>
-        {menuItems.map(x => <MenuItem title={x.title} link={x.link} />)}
+        <div className="h-1" />
+        {menuItems.map(x => <div key={x.link}><MenuItem title={x.title} link={x.link} /></div>)}
     </div>
 }
 

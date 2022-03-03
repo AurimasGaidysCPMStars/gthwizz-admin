@@ -59,7 +59,7 @@ function Languages() {
                     });
                 }}
             />
-            <button onClick={() => {  }} className="px-2 rounded-full text-sky-500/100 hover:font-bold cursor-pointer">
+            <button onClick={() => { }} className="px-2 rounded-full text-sky-500/100 hover:font-bold cursor-pointer">
                 <TrashIcon className={`m-2 mr-2 h-8 w-8 p-1 text-gray-400 z-50`} />
             </button>
         </div>
@@ -86,7 +86,7 @@ function Languages() {
                                 if (!data.top) {
                                     return null;
                                 }
-                                return <RenderCell ld={data} />
+                                return <div key={data.id}><RenderCell ld={data} /></div>
                             })}
                     </span>
                 )}
@@ -106,7 +106,7 @@ function Languages() {
                                 if (data.top) {
                                     return null;
                                 }
-                                return <RenderCell ld={data} />
+                                return <div key={data.id}><RenderCell ld={data} /></div>
                             })}
                     </span>
                 )}

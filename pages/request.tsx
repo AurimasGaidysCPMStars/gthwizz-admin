@@ -25,7 +25,7 @@ const Home: NextPage = () => {
             </Head>
             <Layout>
                 <div className={"flex flex-col w-full h-screen bg-slate-500 p-4 overflow-scroll space-y-4"}>
-                    {value && value.docs.map((x, i) => <RequestCell data={x} id={i} />)}
+                    {value && value.docs.map((x, i) => <div key={x.id}><RequestCell data={x} id={i} /></div>)}
                 </div>
             </Layout>
         </div>
