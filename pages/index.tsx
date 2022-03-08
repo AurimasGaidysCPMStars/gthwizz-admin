@@ -1,12 +1,30 @@
+import { collection } from 'firebase/firestore'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useCollection } from 'react-firebase-hooks/firestore'
 import { BDCounter } from '../components/dashboard-items/DBCounter'
 import { Layout } from '../components/Layout'
+import { firestore } from '../services/clientApp'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
+
+  const [languages, loadinglanguages, errorlanguages] = useCollection(
+    collection(firestore, 'languages'),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
+  );
+
+  const [value, loading, error] = useCollection(
+    collection(firestore, 'requests'),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
+  );
+
   return (
     <div className={styles.container}>
       <Head>
@@ -15,10 +33,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <div className={"flex justify-evenly w-full h-screen bg-slate-500 p-4"}>
-          <BDCounter />
-          <BDCounter />
-          <BDCounter />
+        <div className={"flex justify-start space-x-4 w-full h-screen bg-slate-500 p-4"}>
+          <BDCounter name='Total requests' desc='All the requests submitted.' count={value?.size || 0} />
+          <BDCounter name='Total Languages' desc='Total Languages in language selector.' count={languages?.size || 0} />
         </div>
       </Layout>
     </div>
