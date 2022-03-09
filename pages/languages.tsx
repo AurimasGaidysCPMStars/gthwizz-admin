@@ -96,7 +96,7 @@ function Languages() {
                                     if (!data.top) {
                                         return null;
                                     }
-                                    return <RenderCell ld={data} />
+                                    return <div key={data.id}><RenderCell ld={data} /></div>
                                 })}
                         </div>
                     )}
@@ -116,7 +116,7 @@ function Languages() {
                                     if (data.top) {
                                         return null;
                                     }
-                                    return <RenderCell ld={data} />
+                                    return <div key={data.id}><RenderCell ld={data} /></div>
                                 })}
                         </div>
                     )}
