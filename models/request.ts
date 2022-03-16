@@ -25,4 +25,6 @@ export interface RequestData {
     wordCont: number;
     status: ProjectStatus;
     adminNotes: string;
+    dateCreated: number;
+    dateUpdated: number;
 }

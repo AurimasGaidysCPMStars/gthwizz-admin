@@ -7,6 +7,8 @@ import { RequestCell } from '../components/request-cell/RequestCell'
 import { firestore } from '../services/clientApp'
 import styles from '../styles/Home.module.css'
 
+import { RequestData } from "../models/request";
+
 const Home: NextPage = () => {
 
     const [value, loading, error] = useCollection(
@@ -16,6 +18,17 @@ const Home: NextPage = () => {
         }
     );
 
+    const compare = (a: RequestData, b: RequestData) => {
+        if (a.dateCreated < b.dateCreated) {
+            return -1;
+        }
+        if (a.dateCreated > b.dateCreated) {
+            return 1;
+        }
+        return 0;
+    }
+
+
     return (
         <div className={styles.container}>
             <Head>
@@ -24,8 +37,9 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Layout>
+                <div></div>
                 <div className={"flex flex-col w-full h-screen bg-slate-500 p-4 overflow-scroll space-y-4"}>
-                    {value && value.docs.map((x, i) => <div key={x.id}><RequestCell data={x} id={i} /></div>)}
+                    {value && value.docs.map(x => { return x.data() as RequestData }).sort(compare).map((x, i) => <div key={x.id}><RequestCell data={x} id={i} /></div>)}
                 </div>
             </Layout>
         </div>
