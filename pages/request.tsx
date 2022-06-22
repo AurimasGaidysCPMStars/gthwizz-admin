@@ -8,6 +8,8 @@ import { firestore } from '../services/clientApp'
 import styles from '../styles/Home.module.css'
 
 import { RequestData } from "../models/request";
+import moment from 'moment'
+import { useState } from 'react'
 
 const Home: NextPage = () => {
 
@@ -28,6 +30,25 @@ const Home: NextPage = () => {
         return 0;
     }
 
+    const renderItem = (i: number) => {
+        const [closed, setClosed] = useState(true)
+
+        if (value && value.docs.map(x => { return x.data() as RequestData })
+            .filter(x => moment(x.dateCreated).month() == i).length < 1) {
+            return <div />
+        }
+
+        return <div>
+            {<div style={{ backgroundColor: "black", color: "white", padding: 10 }} onClick={() => setClosed(!closed)}>2022 {moment().month(i).format("MMM")}</div>}
+            {(!closed) && <div>
+                {/* {value && value.docs.map(x => { return x.data() as RequestData }).sort(compare).map((x, i) => <div key={x.id}><RequestCell data={x} id={i} /></div>)} */}
+                {value && value.docs.map(x => { return x.data() as RequestData })
+                    .filter(x => moment(x.dateCreated).month() == i)
+                    .sort(compare)
+                    .map((x, i) => <div style={{ padding: 10 }} key={x.id}><RequestCell data={x} id={i} /></div>)}
+            </div>}
+        </div>
+    }
 
     return (
         <div className={styles.container}>
@@ -39,7 +60,12 @@ const Home: NextPage = () => {
             <Layout>
                 <div></div>
                 <div className={"flex flex-col w-full h-screen bg-slate-500 p-4 overflow-scroll space-y-4"}>
-                    {value && value.docs.map(x => { return x.data() as RequestData }).sort(compare).map((x, i) => <div key={x.id}><RequestCell data={x} id={i} /></div>)}
+                    {/* {value && value.docs.map(x => { return x.data() as RequestData }).sort(compare).map((x, i) => <div key={x.id}><RequestCell data={x} id={i} /></div>)}
+                    {value && value.docs.map(x => { return x.data() as RequestData })
+                        .filter(x => moment(x.dateCreated).month() == 5)
+                        .sort(compare)
+                        .map((x, i) => <div key={x.id}> {moment(x.dateCreated).toISOString()}</div>)} */}
+                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => renderItem(x))}
                 </div>
             </Layout>
         </div>
