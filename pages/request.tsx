@@ -11,6 +11,10 @@ import { RequestData } from "../models/request";
 import moment from 'moment'
 import { useState } from 'react'
 
+interface RPProps {
+    i: number;
+}
+
 const Home: NextPage = () => {
 
     const [value, loading, error] = useCollection(
@@ -30,7 +34,7 @@ const Home: NextPage = () => {
         return 0;
     }
 
-    const renderItem = (i: number) => {
+    const RenderItem = ({ i }: RPProps) => {
         const [closed, setClosed] = useState(true)
 
         if (value && value.docs.map(x => { return x.data() as RequestData })
@@ -65,7 +69,7 @@ const Home: NextPage = () => {
                         .filter(x => moment(x.dateCreated).month() == 5)
                         .sort(compare)
                         .map((x, i) => <div key={x.id}> {moment(x.dateCreated).toISOString()}</div>)} */}
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => renderItem(x))}
+                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => <RenderItem key={x} i={x}/>)}
                 </div>
             </Layout>
         </div>
